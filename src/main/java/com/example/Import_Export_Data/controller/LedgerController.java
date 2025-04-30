@@ -21,14 +21,20 @@ public class LedgerController {
     }
 
     @GetMapping("/ledgers")
-    public String getAllLedgers(Model model){
+    public String getAllLedgers(Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith) {
         List<FullLedgerInfoDTO> ledgers = ledgerService.getAllLedger();
         List<String> apVersions = ledgerService.getDistinctApVersions();
 
         model.addAttribute("ledgers", ledgers);
         model.addAttribute("apVersions", apVersions);
 
-        return "ledgerData";
+        // If it's an AJAX request, return just the ledger content
+        if ("XMLHttpRequest".equals(requestedWith)) {
+            return "ledgerData :: content";
+        }
+        
+        // For direct access, return the full index page
+        return "index";
     }
 
     @PostMapping("/api/ledger/update")

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ledger List</title>
+    <title>Ledger Data</title>
 
     <!-- Bootstrap & DataTables CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -149,266 +149,269 @@
 
 </head>
 <body>
-<div class="container mt-3">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4>Ledger Records</h4>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLedgerModal">
-            Add New Ledger
-        </button>
-    </div>
-    <div id="exportButtonsContainer" class="d-flex gap-2 mt-3"></div>
-    <div class="table-responsive mb-5" style="overflow-x: auto; ">
-        <div style="min-width: 1800px;">
-            <div class="row mt-3 mb-3 ms-3">
-                <div class="col-md-3 d-flex flex-wrap" style="gap: 10px;">
-                    <input type="text" id="ledgerNameSearch" class="form-control" placeholder="Search Ledger Name">
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="groupNameSearch" class="form-control" placeholder="Search Group Name">
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="subGroupNameSearch" class="form-control" placeholder="Search SubGroup Name">
-                </div>
-                <div class="col-md-3">
-                    <select id="apVersionDropdown" class="form-control">
-                        <option value="">All AP Versions</option>
-                        <option th:each="ap : ${apVersions}" th:value="${ap}" th:text="${ap}"></option>
-                    </select>
+    <div th:fragment="content">
+        <div class="container mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>Ledger Records</h4>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLedgerModal">
+                    Add New Ledger
+                </button>
+            </div>
+            <div id="exportButtonsContainer" class="d-flex gap-2 mt-3"></div>
+            <div class="table-responsive mb-5" style="overflow-x: auto; ">
+                <div style="min-width: 1800px;">
+                    <div class="row mt-3 mb-3 ms-3">
+                        <div class="col-md-3 d-flex flex-wrap" style="gap: 10px;">
+                            <input type="text" id="ledgerNameSearch" class="form-control" placeholder="Search Ledger Name">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="groupNameSearch" class="form-control" placeholder="Search Group Name">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="subGroupNameSearch" class="form-control" placeholder="Search SubGroup Name">
+                        </div>
+                        <div class="col-md-3">
+                            <select id="apVersionDropdown" class="form-control">
+                                <option value="">All AP Versions</option>
+                                <option th:each="ap : ${apVersions}" th:value="${ap}" th:text="${ap}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table id="ledgerTable" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ledger Name</th>
+                            <th>Group ID</th>
+                            <th>Group Name</th>
+                            <th>SubGroup ID</th>
+                            <th>SubGroup Name</th>
+                            <th>Created Date</th>
+                            <th>Is Active</th>
+                            <th>Is Deleted</th>
+                            <th>Updated Date</th>
+                            <th>Version</th>
+                            <th>Code</th>
+                            <th>Is Group</th>
+                            <th>Is Ledger</th>
+                            <th>Is SubGroup</th>
+                            <th>Created By</th>
+                            <th>Updated By</th>
+                            <th>Ledger Type ID</th>
+                            <th>Parent ID</th>
+                            <th>Menu ID</th>
+                            <th>Serial Number</th>
+                            <th>Formula</th>
+                            <th>Is Editable</th>
+                            <th>Depreciation Ledger ID</th>
+                            <th>Accumulated Depreciation ID</th>
+                            <th>Is Optional</th>
+                            <th>AP Version</th>
+                            <th>FSA Area ID</th>
+                            <th>Ledger Header</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="ledger : ${ledgers}">
+                            <td th:text="${ledger.id}"></td>
+                            <td th:text="${ledger.ledgerName}"></td>
+                            <td th:text="${ledger.groupId}"></td>
+                            <td th:text="${ledger.groupName}"></td>
+                            <td th:text="${ledger.subGroupId}"></td>
+                            <td th:text="${ledger.subGroupName}"></td>
+                            <td th:text="${ledger.createdDate}"></td>
+                            <td th:text="${ledger.isActive}"></td>
+                            <td th:text="${ledger.isDeleted}"></td>
+                            <td th:text="${ledger.updatedDate}"></td>
+                            <td th:text="${ledger.version}"></td>
+                            <td th:text="${ledger.code}"></td>
+                            <td th:text="${ledger.isGroup}"></td>
+                            <td th:text="${ledger.isLedger}"></td>
+                            <td th:text="${ledger.isSubGroup}"></td>
+                            <td th:text="${ledger.createdBy}"></td>
+                            <td th:text="${ledger.updatedBy}"></td>
+                            <td th:text="${ledger.ledgerTypeId}"></td>
+                            <td th:text="${ledger.parentId}"></td>
+                            <td th:text="${ledger.tbMenuId}"></td>
+                            <td th:text="${ledger.serialNumber}"></td>
+                            <td th:text="${ledger.formula}"></td>
+                            <td th:text="${ledger.isEditable}"></td>
+                            <td th:text="${ledger.depreciationLedgerId}"></td>
+                            <td th:text="${ledger.accumulatedDepreciationId}"></td>
+                            <td th:text="${ledger.isOptional}"></td>
+                            <td th:text="${ledger.apVersion}"></td>
+                            <td th:text="${ledger.fsaAreaId}"></td>
+                            <td th:text="${ledger.ledgerHeader}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <table id="ledgerTable" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Ledger Name</th>
-                    <th>Group ID</th>
-                    <th>Group Name</th>
-                    <th>SubGroup ID</th>
-                    <th>SubGroup Name</th>
-                    <th>Created Date</th>
-                    <th>Is Active</th>
-                    <th>Is Deleted</th>
-                    <th>Updated Date</th>
-                    <th>Version</th>
-                    <th>Code</th>
-                    <th>Is Group</th>
-                    <th>Is Ledger</th>
-                    <th>Is SubGroup</th>
-                    <th>Created By</th>
-                    <th>Updated By</th>
-                    <th>Ledger Type ID</th>
-                    <th>Parent ID</th>
-                    <th>Menu ID</th>
-                    <th>Serial Number</th>
-                    <th>Formula</th>
-                    <th>Is Editable</th>
-                    <th>Depreciation Ledger ID</th>
-                    <th>Accumulated Depreciation ID</th>
-                    <th>Is Optional</th>
-                    <th>AP Version</th>
-                    <th>FSA Area ID</th>
-                    <th>Ledger Header</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="ledger : ${ledgers}">
-                    <td th:text="${ledger.id}"></td>
-                    <td th:text="${ledger.ledgerName}"></td>
-                    <td th:text="${ledger.groupId}"></td>
-                    <td th:text="${ledger.groupName}"></td>
-                    <td th:text="${ledger.subGroupId}"></td>
-                    <td th:text="${ledger.subGroupName}"></td>
-                    <td th:text="${ledger.createdDate}"></td>
-                    <td th:text="${ledger.isActive}"></td>
-                    <td th:text="${ledger.isDeleted}"></td>
-                    <td th:text="${ledger.updatedDate}"></td>
-                    <td th:text="${ledger.version}"></td>
-                    <td th:text="${ledger.code}"></td>
-                    <td th:text="${ledger.isGroup}"></td>
-                    <td th:text="${ledger.isLedger}"></td>
-                    <td th:text="${ledger.isSubGroup}"></td>
-                    <td th:text="${ledger.createdBy}"></td>
-                    <td th:text="${ledger.updatedBy}"></td>
-                    <td th:text="${ledger.ledgerTypeId}"></td>
-                    <td th:text="${ledger.parentId}"></td>
-                    <td th:text="${ledger.tbMenuId}"></td>
-                    <td th:text="${ledger.serialNumber}"></td>
-                    <td th:text="${ledger.formula}"></td>
-                    <td th:text="${ledger.isEditable}"></td>
-                    <td th:text="${ledger.depreciationLedgerId}"></td>
-                    <td th:text="${ledger.accumulatedDepreciationId}"></td>
-                    <td th:text="${ledger.isOptional}"></td>
-                    <td th:text="${ledger.apVersion}"></td>
-                    <td th:text="${ledger.fsaAreaId}"></td>
-                    <td th:text="${ledger.ledgerHeader}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Add New Ledger Modal -->
-    <div class="modal fade" id="addLedgerModal" tabindex="-1" aria-labelledby="addLedgerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addLedgerModalLabel">Add New Ledgerr</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="wizard">
-                        <div class="wizard-progress">
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 0%"></div>
-                            </div>
-                            <ul class="nav nav-pills">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#step1" data-bs-toggle="pill">Basic Info</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#step2" data-bs-toggle="pill">Type & Status</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#step3" data-bs-toggle="pill">Additional Info</a>
-                                </li>
-                            </ul>
+            <!-- Add New Ledger Modal -->
+            <div class="modal fade" id="addLedgerModal" tabindex="-1" aria-labelledby="addLedgerModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addLedgerModalLabel">Add New Ledger</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="tab-content">
-                            <!-- Step 1: Basic Information -->
-                            <div class="tab-pane fade show active" id="step1">
-                                <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <label for="ledgerName" class="form-label">Ledger Name *</label>
-                                        <input type="text" class="form-control" id="ledgerName" required>
+                        <div class="modal-body">
+                            <div class="wizard">
+                                <div class="wizard-progress">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="code" class="form-label">Code</label>
-                                        <input type="text" class="form-control" id="code" maxlength="16">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="version" class="form-label">Version *</label>
-                                        <input type="number" class="form-control" id="version" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="apVersion" class="form-label">AP Version *</label>
-                                        <input type="number" class="form-control" id="apVersion" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="ledgerHeader" class="form-label">Ledger Header</label>
-                                        <input type="text" class="form-control" id="ledgerHeader" maxlength="100">
-                                    </div>
+                                    <ul class="nav nav-pills">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#step1" data-bs-toggle="pill">Basic Info</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#step2" data-bs-toggle="pill">Type & Status</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#step3" data-bs-toggle="pill">Additional Info</a>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </div>
+                                <div class="tab-content">
+                                    <!-- Step 1: Basic Information -->
+                                    <div class="tab-pane fade show active" id="step1">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-3">
+                                                <label for="ledgerName" class="form-label">Ledger Name *</label>
+                                                <input type="text" class="form-control" id="ledgerName" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="code" class="form-label">Code</label>
+                                                <input type="text" class="form-control" id="code" maxlength="16">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="version" class="form-label">Version *</label>
+                                                <input type="number" class="form-control" id="version" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="apVersion" class="form-label">AP Version *</label>
+                                                <input type="number" class="form-control" id="apVersion" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="ledgerHeader" class="form-label">Ledger Header</label>
+                                                <input type="text" class="form-control" id="ledgerHeader" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <!-- Step 2: Type & Status -->
-                            <div class="tab-pane fade" id="step2">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="isActive" class="form-label">Is Active *</label>
-                                        <select class="form-select" id="isActive" required>
-                                            <option value="true" selected>Yes</option>
-                                            <option value="false">No</option>
-                                        </select>
+                                    <!-- Step 2: Type & Status -->
+                                    <div class="tab-pane fade" id="step2">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="isActive" class="form-label">Is Active *</label>
+                                                <select class="form-select" id="isActive" required>
+                                                    <option value="true" selected>Yes</option>
+                                                    <option value="false">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="isDeleted" class="form-label">Is Deleted *</label>
+                                                <select class="form-select" id="isDeleted" required>
+                                                    <option value="false" selected>No</option>
+                                                    <option value="true">Yes</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="isGroup" class="form-label">Is Group *</label>
+                                                <select class="form-select" id="isGroup" required>
+                                                    <option value="false" selected>No</option>
+                                                    <option value="true">Yes</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="isLedger" class="form-label">Is Ledger *</label>
+                                                <select class="form-select" id="isLedger" required>
+                                                    <option value="true" selected>Yes</option>
+                                                    <option value="false">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="isSubGroup" class="form-label">Is SubGroup *</label>
+                                                <select class="form-select" id="isSubGroup" required>
+                                                    <option value="false" selected>No</option>
+                                                    <option value="true">Yes</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="isEditable" class="form-label">Is Editable *</label>
+                                                <select class="form-select" id="isEditable" required>
+                                                    <option value="true" selected>Yes</option>
+                                                    <option value="false">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="isOptional" class="form-label">Is Optional *</label>
+                                                <select class="form-select" id="isOptional" required>
+                                                    <option value="false" selected>No</option>
+                                                    <option value="true">Yes</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="isDeleted" class="form-label">Is Deleted *</label>
-                                        <select class="form-select" id="isDeleted" required>
-                                            <option value="false" selected>No</option>
-                                            <option value="true">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="isGroup" class="form-label">Is Group *</label>
-                                        <select class="form-select" id="isGroup" required>
-                                            <option value="false" selected>No</option>
-                                            <option value="true">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="isLedger" class="form-label">Is Ledger *</label>
-                                        <select class="form-select" id="isLedger" required>
-                                            <option value="true" selected>Yes</option>
-                                            <option value="false">No</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="isSubGroup" class="form-label">Is SubGroup *</label>
-                                        <select class="form-select" id="isSubGroup" required>
-                                            <option value="false" selected>No</option>
-                                            <option value="true">Yes</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="isEditable" class="form-label">Is Editable *</label>
-                                        <select class="form-select" id="isEditable" required>
-                                            <option value="true" selected>Yes</option>
-                                            <option value="false">No</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="isOptional" class="form-label">Is Optional *</label>
-                                        <select class="form-select" id="isOptional" required>
-                                            <option value="false" selected>No</option>
-                                            <option value="true">Yes</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Step 3: Additional Information -->
-                            <div class="tab-pane fade" id="step3">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="createdBy" class="form-label">Created By *</label>
-                                        <input type="number" class="form-control" id="createdBy" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="updatedBy" class="form-label">Updated By *</label>
-                                        <input type="number" class="form-control" id="updatedBy" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="ledgerTypeId" class="form-label">Ledger Type ID</label>
-                                        <input type="number" class="form-control" id="ledgerTypeId">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="parentId" class="form-label">Parent ID</label>
-                                        <input type="number" class="form-control" id="parentId">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="tbMenuId" class="form-label">Menu ID</label>
-                                        <input type="number" class="form-control" id="tbMenuId">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="serialNumber" class="form-label">Serial Number</label>
-                                        <input type="number" class="form-control" id="serialNumber">
-                                    </div>
-                                    <div class="col-md-12 mb-3">
-                                        <label for="formula" class="form-label">Formula</label>
-                                        <input type="text" class="form-control" id="formula">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="depreciationLedgerId" class="form-label">Depreciation Ledger ID</label>
-                                        <input type="number" class="form-control" id="depreciationLedgerId">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="accumulatedDepreciationId" class="form-label">Accumulated Depreciation ID</label>
-                                        <input type="number" class="form-control" id="accumulatedDepreciationId">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="fsaAreaId" class="form-label">FSA Area ID</label>
-                                        <input type="number" class="form-control" id="fsaAreaId">
+                                    <!-- Step 3: Additional Information -->
+                                    <div class="tab-pane fade" id="step3">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="createdBy" class="form-label">Created By *</label>
+                                                <input type="number" class="form-control" id="createdBy" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="updatedBy" class="form-label">Updated By *</label>
+                                                <input type="number" class="form-control" id="updatedBy" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="ledgerTypeId" class="form-label">Ledger Type ID</label>
+                                                <input type="number" class="form-control" id="ledgerTypeId">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="parentId" class="form-label">Parent ID</label>
+                                                <input type="number" class="form-control" id="parentId">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="tbMenuId" class="form-label">Menu ID</label>
+                                                <input type="number" class="form-control" id="tbMenuId">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="serialNumber" class="form-label">Serial Number</label>
+                                                <input type="number" class="form-control" id="serialNumber">
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label for="formula" class="form-label">Formula</label>
+                                                <input type="text" class="form-control" id="formula">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="depreciationLedgerId" class="form-label">Depreciation Ledger ID</label>
+                                                <input type="number" class="form-control" id="depreciationLedgerId">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="accumulatedDepreciationId" class="form-label">Accumulated Depreciation ID</label>
+                                                <input type="number" class="form-control" id="accumulatedDepreciationId">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="fsaAreaId" class="form-label">FSA Area ID</label>
+                                                <input type="number" class="form-control" id="fsaAreaId">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">Previous</button>
+                            <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                            <button type="button" class="btn btn-success" id="saveLedgerBtn" style="display: none;">Save Ledger</button>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">Previous</button>
-                    <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
-                    <button type="button" class="btn btn-success" id="saveLedgerBtn" style="display: none;">Save Ledger</button>
                 </div>
             </div>
         </div>
